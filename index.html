@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .landing-page {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('landing-background.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .drag-bar {
+            padding: 20px 40px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            color: black;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-content {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                        url('main-background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            display: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 7.5px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            font-size: 17px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border: 1px solid rgba(0, 198, 255, 0.3);
+        }
+
+        .sidebar a:hover {
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .content-section {
+            margin-left: 200px;
+            min-height: 100vh;
+            display: none;
+            padding: 40px;
+        }
+
+        #main-section {
+            display: block;
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin: 30px auto;
+            border: 5px solid white;
+            background-image: url('myphoto.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+        }
+
+        .welcome-msg {
+            font-size: 2.5em;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .certificate-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3);
+            border-color: #00c6ff;
+        }
+
+        .certificate-title {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .view-certificate-btn {
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-certificate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
+        }
+
+        .social-links {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: #00c6ff;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 10px;
+            }
+
+            .content-section {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-photo {
+                width: 200px;
+                height: 200px;
+            }
+
+            .social-links {
+                position: static;
+                text-align: center;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <button class="drag-bar" aria-label="Click to explore portfolio">Click me to explore</button>
+    </div>
+
+    <div class="main-content">
+        <nav class="sidebar" role="navigation">
+            <a href="#main" aria-label="About Me Section" data-section="main-section">About Me</a>
+            <a href="#projects" aria-label="Projects Section" data-section="projects-section">Projects</a>
+            <a href="#certificates" aria-label="Certificates Section" data-section="certificates-section">Certificates</a>
+            <a href="#security" aria-label="Security Section" data-section="security-section">Defeat Threat Actors</a>
+            <a href="#resume" aria-label="Resume Section" data-section="resume-section">Resume</a>
+        </nav>
+
+        <main>
+            <!-- Main Section -->
+            <section id="main-section" class="content-section">
+                <h1 class="welcome-msg">Welcome, Securing tomorrow by Protecting today!</h1>
+                <div class="profile-photo" role="img" aria-label="Profile photograph"></div>
+            </section>
+
+            <!-- Certificates Section -->
+            <section id="certificates-section" class="content-section">
+                <h1 class="welcome-msg">My Certificates</h1>
+                <div class="certificates-grid">
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Networks and Network Security</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera 9T3GCWMXREAY.pdf">View Certificate</button>
+                    </div>
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Manage Security Risks</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera JTMHT43ATTN6.pdf">View Certificate</button>
+                    </div>
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Foundations of Cybersecurity</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera K7Q2AA2GSZ2A.pdf">View Certificate</button>
+                    </div>
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Assets, Threats, and Vulnerabilities</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera PW5C5JBT9V6F.pdf">View Certificate</button>
+                    </div>
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Tools of the Trade: Linux and SQL</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera T1C3OH4FDO5U.pdf">View Certificate</button>
+                    </div>
+                    <div class="certificate-card">
+                        <h3 class="certificate-title">Sound the Alarm: Detection and Response</h3>
+                        <button class="view-certificate-btn" data-pdf="Coursera TZVR754WYX2S.pdf">View Certificate</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects-section" class="content-section">
+                <h1 class="welcome-msg">My Projects</h1>
+                <!-- Add your projects content here -->
+            </section>
+
+            <!-- Security Section -->
+            <section id="security-section" class="content-section">
+                <h1 class="welcome-msg">Defeat Threat Actors</h1>
+                <!-- Add your security content here -->
+            </section>
+
+            <!-- Resume Section -->
+            <section id="resume-section" class="content-section">
+                <h1 class="welcome-msg">Resume</h1>
+                <!-- Add your resume content here -->
+            </section>
+        </main>
+
+        <!-- Previous code remains the same until resume section -->
+
+            <!-- Resume Section -->
+            <section id="resume-section" class="content-section">
+                <h1 class="welcome-msg">Resume</h1>
+                <div class="resume-container">
+                    <div class="resume-preview">
+                        <h2 class="section-title">My Professional Resume</h2>
+                        <p class="resume-description">
+                            View or download my complete professional resume detailing my experience,
+                            skills, and certifications in cybersecurity and information technology.
+                        </p>
+                        <div class="resume-actions">
+                            <button class="view-resume-btn" onclick="window.open('Jawad_Naimi-RESUME-.pdf')">
+                                View Resume
+                            </button>
+                            <a href="Jawad_Naimi-RESUME-.pdf" download class="download-resume-btn">
+                                Download Resume
+                            </a>
+                        </div>
+                        <div class="resume-highlights">
+                            <h3>Resume Highlights:</h3>
+                            <ul>
+                                <li>Cybersecurity Expertise</li>
+                                <li>Network Security</li>
+                                <li>Threat Detection & Response</li>
+                                <li>Risk Management</li>
+                                <li>Security Tools & Technologies</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<!-- Add these styles to your existing CSS -->
+<style>
+    .resume-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 15px;
+        border: 1px solid rgba(0, 198, 255, 0.3);
+    }
+
+    .resume-preview {
+        text-align: center;
+    }
+
+    .section-title {
+        color: white;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .resume-description {
+        color: white;
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    .resume-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .view-resume-btn, .download-resume-btn {
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: inline-block;
+    }
+
+    .view-resume-btn:hover, .download-resume-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
+    }
+
+    .resume-highlights {
+        text-align: left;
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+
+    .resume-highlights h3 {
+        color: white;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+    }
+
+    .resume-highlights ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .resume-highlights li {
+        color: white;
+        padding: 10px 0;
+        margin: 5px 0;
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .resume-highlights li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #00c6ff;
+    }
+
+    /* Mobile Responsiveness for Resume Section */
+    @media (max-width: 768px) {
+        .resume-container {
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .resume-actions {
+            flex-direction: column;
+        }
+
+        .view-resume-btn, .download-resume-btn {
+            width: 100%;
+        }
+
+        .resume-highlights {
+            padding: 15px;
+        }
+    }
+</style>
+
+<!-- Rest of the code remains the same -->
+
+<div class="social-links">
+    <a href="https://www.linkedin.com/in/jawadnaimi/" target="_blank" rel="noopener noreferrer" aria-label="My LinkedIn Profile">LinkedIn</a>
+    <a href="https://instagram.com/your-profile" target="_blank" rel="noopener noreferrer" aria-label="My Instagram Profile">Instagram</a>
+    <a href="https://facebook.com/your-profile" target="_blank" rel="noopener noreferrer" aria-label="My Facebook Profile">Facebook</a>
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the page
+            const mainContent = document.querySelector('.main-content');
+            const dragBar = document.querySelector('.drag-bar');
+            const sections = document.querySelectorAll('.content-section');
+
+            // Handle the initial exploration click
+            dragBar.addEventListener('click', function() {
+                document.querySelector('.landing-page').style.display = 'none';
+                mainContent.style.display = 'block';
+            });
+
+            // Handle section navigation
+            document.querySelector('.sidebar').addEventListener('click', function(e) {
+                if (e.target.hasAttribute('data-section')) {
+                    e.preventDefault();
+                    const sectionId = e.target.getAttribute('data-section');
+                    switchSection(sectionId);
+                }
+            });
+
+            // Handle certificate buttons
+            document.querySelectorAll('.view-certificate-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pdfUrl = this.getAttribute('data-pdf');
+                    if (pdfUrl) {
+                        window.open(pdfUrl);
+                    }
+                });
+            });
+
+            function switchSection(sectionId) {
+                try {
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show selected section
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.style.display = 'block';
+                    } else {
+                        console.error('Section not found:', sectionId);
+                    }
+                } catch (error) {
+                    console.error('Error switching sections:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

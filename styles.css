@@ -1,0 +1,78 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Landing Page */
+#landing-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to right, #0066ff, #00ccff);
+}
+
+.drag-bar {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Main Content */
+#main-content {
+    display: none;
+    background: #f4f4f4;
+    min-height: 100vh;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: #0066ff;
+    color: white;
+    padding: 20px 0;
+}
+
+#sidebar ul {
+    list-style: none;
+}
+
+#sidebar ul li {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#sidebar ul li:hover {
+    background: #0052cc;
+}
+
+.content-section {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.certificates-container {
+    display: flex;
+    gap: 20px;
+}
+
+.certificate {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    text-align: center;
+    border-radius: 5px;
+}
